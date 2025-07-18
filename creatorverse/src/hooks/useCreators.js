@@ -5,7 +5,6 @@ export function useCreators() {
     const [creators, setCreators] = useState([]);
     const [loading,  setLoading ] = useState(true);
 
-    /** Read all */
     const fetchCreators = useCallback(async () => {
         setLoading(true);
         const { data, error } = await supabase
@@ -17,7 +16,6 @@ export function useCreators() {
         setLoading(false);
     }, []);
 
-    /** Create */
     const addCreator = async (payload) => {
         const { error } = await supabase.from("creators").insert(payload);
         if (!error) await fetchCreators();

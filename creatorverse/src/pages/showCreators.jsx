@@ -28,12 +28,11 @@ export default function ShowCreators() {
         <main className="container flow-lg">
             {/* Hero / title area */}
             <header className="hero flow-sm">
-                <h1>CreatorVerse</h1>
                 <p className="lead">
-                    A showcase of your favorite content creators—add, edit, or remove at will.
+                    All of your favorite creators in one place.
                 </p>
-                <Link to="/new" className="contrast">
-                    ➕ Add Creator
+                <Link to="/new" className="contrast add-creator">
+                    Add Creator
                 </Link>
             </header>
 
