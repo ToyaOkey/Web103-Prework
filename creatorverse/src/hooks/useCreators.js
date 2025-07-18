@@ -20,7 +20,7 @@ export function useCreators() {
     /** Create */
     const addCreator = async (payload) => {
         const { error } = await supabase.from("creators").insert(payload);
-        if (!error) fetchCreators();
+        if (!error) await fetchCreators();
     };
 
     /** Update */
@@ -29,17 +29,18 @@ export function useCreators() {
             .from("creators")
             .update(payload)
             .eq("id", id);
-        if (!error) fetchCreators();
+        if (!error) await fetchCreators();
     };
 
     /** Delete */
     const deleteCreator = async (id) => {
         const { error } = await supabase.from("creators").delete().eq("id", id);
-        if (!error) fetchCreators();
+        if (!error) await fetchCreators();
     };
 
     useEffect(() => {
-        fetchCreators();
+        fetchCreators().then(r =>
+        console.log("Creators fetched:", r));
     }, [fetchCreators]);
 
     return { creators, loading, addCreator, updateCreator, deleteCreator };
