@@ -21,7 +21,6 @@ export function useCreators() {
         if (!error) await fetchCreators();
     };
 
-    /** Update */
     const updateCreator = async (id, payload) => {
         const { error } = await supabase
             .from("creators")
@@ -30,7 +29,6 @@ export function useCreators() {
         if (!error) await fetchCreators();
     };
 
-    /** Delete */
     const deleteCreator = async (id) => {
         const { error } = await supabase.from("creators").delete().eq("id", id);
         if (!error) await fetchCreators();

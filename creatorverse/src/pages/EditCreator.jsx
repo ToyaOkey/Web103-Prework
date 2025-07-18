@@ -6,7 +6,6 @@ export default function EditCreator() {
     const { id }       = useParams();
     const navigate     = useNavigate();
 
-    // form state
     const [form, setForm]       = useState({
         name: '',
         url: '',
@@ -40,11 +39,9 @@ export default function EditCreator() {
         console.log('Creator loaded:', r));
     }, [id]);
 
-    // 2) handle input changes
     const handleChange = (e) =>
         setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
-    // 3) submit updated data
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);

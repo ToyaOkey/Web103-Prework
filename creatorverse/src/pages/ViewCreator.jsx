@@ -4,13 +4,12 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { supabase } from '../client';
 
 export default function ViewCreator() {
-    const { id } = useParams();         // 1) get the creator ID from URL
+    const { id } = useParams();
     const navigate = useNavigate();
 
     const [creator, setCreator] = useState(null);
     const [loading, setLoading]   = useState(true);
 
-    // 2) fetch the single creator record when `id` changes
     useEffect(() => {
         async function fetchOne() {
             setLoading(true);
@@ -31,17 +30,14 @@ export default function ViewCreator() {
         fetchOne();
     }, [id]);
 
-    // 3) delete handler (optional)
     const handleDelete = async () => {
         await supabase.from('creators').delete().eq('id', id);
-        navigate('/');                 // back to list after delete
+        navigate('/');
     };
 
-    // 4) UI states
     if (loading) return <p>Loading…</p>;
     if (!creator) return <p>Creator not found.</p>;
 
-    // 5) render the creator’s details
     return (
         <article className="card">
             {creator.imageURL && (
@@ -65,6 +61,7 @@ export default function ViewCreator() {
             <footer style={{ display: 'flex', gap: '1rem', marginTop: '1em' }}>
                 <Link to={`/edit/${id}`}><button>Edit</button></Link>
                 <button onClick={handleDelete}>Delete</button>
+                <Link to="/" className="secondary">Back to list</Link>
             </footer>
         </article>
     );

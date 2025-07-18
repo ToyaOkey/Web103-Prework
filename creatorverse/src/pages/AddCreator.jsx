@@ -12,11 +12,9 @@ export default function AddCreator() {
     const [loading, setLoading] = useState(false);
     const navigate              = useNavigate();
 
-    // Keep form values in component state
     const handleChange = (e) =>
         setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
-    // On submitting, insert into Supabase and redirect home
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
