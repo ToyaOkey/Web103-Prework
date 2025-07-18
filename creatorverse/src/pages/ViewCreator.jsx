@@ -1,4 +1,3 @@
-// src/pages/ViewCreator.jsx
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { supabase } from '../client';
@@ -10,7 +9,6 @@ export default function ViewCreator() {
     const [creator, setCreator] = useState(null);
     const [loading, setLoading]   = useState(true);
 
-    // 2) fetch the single creator record when `id` changes
     useEffect(() => {
         async function fetchOne() {
             setLoading(true);
@@ -63,8 +61,8 @@ export default function ViewCreator() {
             <p style={{ margin: '0.5em 0' }}>{creator.description}</p>
 
             <footer style={{ display: 'flex', gap: '1rem', marginTop: '1em' }}>
-                <Link to={`/edit/${id}`}>✏️ Edit</Link>
-                <button onClick={handleDelete}>🗑️ Delete</button>
+                <Link to={`/edit/${id}`}>Edit</Link>
+                <button onClick={handleDelete}>Delete</button>
             </footer>
         </article>
     );

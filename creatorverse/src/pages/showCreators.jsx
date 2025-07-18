@@ -8,55 +8,45 @@ export default function ShowCreators() {
     const [creators, setCreators] = useState([]);
     const [loading, setLoading]   = useState(true);
 
-    // Step 5a: fetch all creators from the DB
     useEffect(() => {
-        async function fetchCreators() {
-            const { data, error } = await supabase
-                .from('creators')
-                .select('*')
-                .order('name', { ascending: true });
-
-            if (error) {
-                console.error('Error loading creators:', error);
-            } else {
-                setCreators(data);
-            }
-            setLoading(false);
-        }
-
-        fetchCreators();
+        supabase
+            .from('creators')
+            .select('*')
+            .order('name', { ascending: true })
+            .then(({ data, error }) => {
+                if (error) console.error(error);
+                else setCreators(data);
+                setLoading(false);
+            });
     }, []);
 
-    // Loading state
     if (loading) {
-        return <p>Loading creators…</p>;
+        return <p className="text-center">Loading creators…</p>;
     }
 
-    // No-data state
-    if (creators.length === 0) {
-        return (
-            <p>
-                No creators yet.{' '}
-                <Link to="/new">Add your first creator</Link>
-            </p>
-        );
-    }
-
-    // Data state: map each record to a CreatorCard
     return (
-        <section>
-            <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <h2>All Creators</h2>
+        <section className="container flow">
+            <header className="grid columns-2">
                 <Link to="/new" className="contrast">
                     ➕ Add Creator
                 </Link>
             </header>
 
-            <div className="grid" style={{ gap: '1rem', marginTop: '1rem' }}>
-                {creators.map((c) => (
-                    <CreatorCard key={c.id} creator={c} />
-                ))}
-            </div>
+            {creators.length === 0 ? (
+                <p className="text-center">
+                    No creators yet. <Link to="/new">Add one now!</Link>
+                </p>
+            ) : (
+                /* Responsive grid: 1 column on xs, 2 on sm, 3 on md+ */
+                <div className="grid columns-1 columns-sm-2 columns-md-3">
+                    {creators.map((c) => (
+                        <CreatorCard key={c.id} creator={c} onDelete={() => {
+                            supabase.from('creators').delete().eq('id',c.id)
+                                .then(() => setCreators((cur) => cur.filter(x=>x.id!==c.id)));
+                        }} />
+                    ))}
+                </div>
+            )}
         </section>
     );
 }

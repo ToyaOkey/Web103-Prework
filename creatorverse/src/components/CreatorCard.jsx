@@ -1,42 +1,55 @@
 // src/components/CreatorCard.jsx
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function CreatorCard({ creator, onDelete }) {
     const { id, name, url, description, imageURL } = creator;
 
     return (
         <article className="card">
-            {/* Image (optional) */}
             {imageURL && (
-                <img
-                    src={imageURL}
-                    alt={name}
-                    style={{ maxWidth: '100%', borderRadius: '8px' }}
-                />
+                <figure>
+                    <img
+                        src={imageURL}
+                        alt={name}
+                        className="radius"
+                        style={{
+                            width: '100%',
+                            maxHeight: '180px',
+                            objectFit: 'cover'
+                        }}
+                    />
+                </figure>
             )}
 
-            {/* Name */}
-            <h2 style={{ margin: '0.5em 0' }}>{name}</h2>
+            <h2>{name}</h2>
 
-            {/* URL */}
-            <p>
-                <a href={url} target="_blank" rel="noopener noreferrer">
-                    Visit {name} ↗
-                </a>
-            </p>
+            <p>{description}</p>
 
-            {/* Description */}
-            <p style={{ margin: '0.5em 0' }}>{description}</p>
-
-            {/* Optional Delete button (if you pass onDelete) */}
-            {onDelete && (
-                <button
-                    onClick={() => onDelete(id)}
-                    style={{ marginTop: '0.5em' }}
+            <footer className="flex">
+                <a
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="contrast"
                 >
-                    🗑️ Delete
-                </button>
-            )}
+                    Visit ↗
+                </a>
+
+                <Link to={`/edit/${id}`} className="secondary">
+                    Edit
+                </Link>
+
+                {onDelete && (
+                    <button
+                        type="button"
+                        className="outline"
+                        onClick={() => onDelete(id)}
+                    >
+                        Delete
+                    </button>
+                )}
+            </footer>
         </article>
     );
 }

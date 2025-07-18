@@ -1,4 +1,3 @@
-// src/pages/EditCreator.jsx
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { supabase } from '../client';
@@ -16,7 +15,6 @@ export default function EditCreator() {
     });
     const [loading, setLoading] = useState(true);
 
-    // 1) load the existing creator data into the form
     useEffect(() => {
         async function loadCreator() {
             const { data, error } = await supabase
@@ -38,7 +36,8 @@ export default function EditCreator() {
             setLoading(false);
         }
 
-        loadCreator();
+        loadCreator().then(r =>
+        console.log('Creator loaded:', r));
     }, [id]);
 
     // 2) handle input changes
@@ -114,7 +113,7 @@ export default function EditCreator() {
                 <label>
                     Image URL (optional)
                     <input
-                        name="imageurl"
+                        name="imageURL"
                         value={form.imageURL}
                         onChange={handleChange}
                     />

@@ -1,4 +1,3 @@
-// src/App.jsx
 import React from 'react';
 import { BrowserRouter, useRoutes } from 'react-router-dom';
 
@@ -21,7 +20,7 @@ export default function App() {
     return (
         <BrowserRouter>
             <main className="container">
-                <h1>💫 Creatorverse</h1>
+                <h1>CreatorVerse</h1>
                 <AppRoutes />
             </main>
         </BrowserRouter>
