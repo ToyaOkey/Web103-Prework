@@ -6,27 +6,22 @@ export default function CreatorCard({ creator, onDelete }) {
     const { id, name, url, description, imageURL } = creator;
 
     return (
-        <article className="card">
+        <article className="card flow-sm">
+            {/* 16×9 aspect-ratio image header */}
             {imageURL && (
-                <figure>
-                    <img
-                        src={imageURL}
-                        alt={name}
-                        className="radius"
-                        style={{
-                            width: '100%',
-                            maxHeight: '180px',
-                            objectFit: 'cover'
-                        }}
-                    />
+                <figure className="ratio ratio-16x9 radius">
+                    <img src={imageURL} alt={name} />
                 </figure>
             )}
 
-            <h2>{name}</h2>
+            {/* Title + description with small flow spacing */}
+            <div className="flow-xs">
+                <h3 className="capitalize">{name}</h3>
+                <p className="text-sm text-gray-600">{description}</p>
+            </div>
 
-            <p>{description}</p>
-
-            <footer className="flex">
+            {/* Footer with Visit link and action buttons */}
+            <footer className="flex justify-between items-center">
                 <a
                     href={url}
                     target="_blank"
@@ -35,20 +30,20 @@ export default function CreatorCard({ creator, onDelete }) {
                 >
                     Visit ↗
                 </a>
-
-                <Link to={`/edit/${id}`} className="secondary">
-                    Edit
-                </Link>
-
-                {onDelete && (
-                    <button
-                        type="button"
-                        className="outline"
-                        onClick={() => onDelete(id)}
-                    >
-                        Delete
-                    </button>
-                )}
+                <div className="flex gap-xs">
+                    <Link to={`/edit/${id}`} className="secondary">
+                        Edit
+                    </Link>
+                    {onDelete && (
+                        <button
+                            type="button"
+                            className="outline"
+                            onClick={() => onDelete(id)}
+                        >
+                            Delete
+                        </button>
+                    )}
+                </div>
             </footer>
         </article>
     );

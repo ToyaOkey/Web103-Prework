@@ -25,28 +25,37 @@ export default function ShowCreators() {
     }
 
     return (
-        <section className="container flow">
-            <header className="grid columns-2">
+        <main className="container flow-lg">
+            {/* Hero / title area */}
+            <header className="hero flow-sm">
+                <h1>CreatorVerse</h1>
+                <p className="lead">
+                    A showcase of your favorite content creators—add, edit, or remove at will.
+                </p>
                 <Link to="/new" className="contrast">
                     ➕ Add Creator
                 </Link>
             </header>
 
+            {/* Empty state */}
             {creators.length === 0 ? (
                 <p className="text-center">
-                    No creators yet. <Link to="/new">Add one now!</Link>
+                    No creators to show. <Link to="/new">Add your first one!</Link>
                 </p>
             ) : (
-                /* Responsive grid: 1 column on xs, 2 on sm, 3 on md+ */
-                <div className="grid columns-1 columns-sm-2 columns-md-3">
+                <div className="grid columns-1 columns-sm-2 columns-md-3 gap-lg">
                     {creators.map((c) => (
-                        <CreatorCard key={c.id} creator={c} onDelete={() => {
-                            supabase.from('creators').delete().eq('id',c.id)
-                                .then(() => setCreators((cur) => cur.filter(x=>x.id!==c.id)));
-                        }} />
+                        <CreatorCard
+                            key={c.id}
+                            creator={c}
+                            onDelete={async (id) => {
+                                await supabase.from('creators').delete().eq('id', id);
+                                setCreators((cur) => cur.filter((x) => x.id !== id));
+                            }}
+                        />
                     ))}
                 </div>
             )}
-        </section>
+        </main>
     );
 }
